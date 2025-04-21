@@ -38,11 +38,11 @@ app.get("/api/players/all", async (req, res) => {
     const cluster = await connectCouchbase();
     const bucket = cluster.bucket(process.env.COUCHBASE_BUCKET);
     const scope = bucket.scope("_default");
-    const query = `SELECT META().id AS id, * FROM \`${process.env.COUCHBASE_BUCKET}\``;
+    const query = `SELECT META().id AS id, * FROM \`${process.env.COUCHBASE_BUCKET}\`._default.Mario`;
 
     const result = await cluster.query(query);
 
-    const players = result.rows.map(row => ({
+    const players = result.rows.map((row) => ({
       id: row.id,
       ...row[process.env.COUCHBASE_BUCKET],
     }));
@@ -97,7 +97,12 @@ app.post("/api/players", async (req, res) => {
     // Upsert (Insert or Update) player record
     await collection.upsert(playerId, playerDocument);
 
-    res.status(200).json({ message: "Player record created/updated successfully", playerId });
+    res
+      .status(200)
+      .json({
+        message: "Player record created/updated successfully",
+        playerId,
+      });
   } catch (error) {
     console.error("Error creating/updating player record:", error);
     res.status(500).json({ error: "Failed to create/update player record" });
@@ -142,9 +147,15 @@ app.put("/api/players/:playerId", async (req, res) => {
 
     // Calculate deltas
     const delta = {
-      coinsCollected: (currentStats.coinsCollected || 0) - (playerDocument.lastStatsSnapshot.coinsCollected || 0),
-      fireballsShot: (currentStats.fireballsShot || 0) - (playerDocument.lastStatsSnapshot.fireballsShot || 0),
-      enemiesDefeated: (currentStats.enemiesDefeated || 0) - (playerDocument.lastStatsSnapshot.enemiesDefeated || 0),
+      coinsCollected:
+        (currentStats.coinsCollected || 0) -
+        (playerDocument.lastStatsSnapshot.coinsCollected || 0),
+      fireballsShot:
+        (currentStats.fireballsShot || 0) -
+        (playerDocument.lastStatsSnapshot.fireballsShot || 0),
+      enemiesDefeated:
+        (currentStats.enemiesDefeated || 0) -
+        (playerDocument.lastStatsSnapshot.enemiesDefeated || 0),
       flagPoleHeight: Math.max(
         playerDocument.cumulativeStats.flagPoleHeight,
         currentStats.flagPoleHeight || 0
@@ -193,7 +204,7 @@ app.delete("/api/players/delete", async (req, res) => {
     const collection = await getCollection();
 
     // Query to fetch all player IDs
-    const query = `SELECT META().id AS id FROM \`${process.env.COUCHBASE_BUCKET}\``;
+    const query = `SELECT META().id AS id FROM \`${process.env.COUCHBASE_BUCKET}\`._default.Mario`;
     const result = await cluster.query(query);
 
     // Delete each player document
@@ -219,13 +230,16 @@ app.delete("/api/players/delete/:playerId", async (req, res) => {
     // Delete the specific player document
     await collection.remove(playerId);
 
-    res.status(200).json({ message: `Player with ID ${playerId} deleted successfully` });
+    res
+      .status(200)
+      .json({ message: `Player with ID ${playerId} deleted successfully` });
   } catch (error) {
     console.error(`Error deleting player with ID ${playerId}:`, error);
-    res.status(500).json({ error: `Failed to delete player with ID ${playerId}` });
+    res
+      .status(500)
+      .json({ error: `Failed to delete player with ID ${playerId}` });
   }
 });
-
 
 // Start the server
 app.listen(port, () => {
