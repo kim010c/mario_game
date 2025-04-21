@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Mario theme animations */
+@keyframes coin-spin {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.font-corporate {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.animate-bounce {
+  animation: coin-spin 1s infinite;
+}
+
+/* Mario theme gradients */
+.mario-gradient-text {
+  background: linear-gradient(to right, 
+    #FF0000, /* Mario Red */
+    #FFA500, /* Fire Orange */
+    #FFFF00, /* Coin Yellow */
+    #00FF00  /* Pipe Green */
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.mario-card-hover {
+  transition: transform 0.2s ease-in-out;
+}
+
+.mario-card-hover:hover {
+  transform: translateY(-2px);
+}
+
+body {
+  font-family: 'Press Start 2P', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  background-color: #ffffff;
+}
+
+.countdown {
+  font-family: 'Bungee Shade', cursive;
+  font-size: 30rem;
+  z-index: 50; /* Ensure it is on the top layer */
+}
+
