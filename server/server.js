@@ -27,7 +27,8 @@ const connectCouchbase = async () => {
 const getCollection = async () => {
   const cluster = await connectCouchbase();
   const bucket = cluster.bucket(process.env.COUCHBASE_BUCKET);
-  return bucket.defaultCollection();
+  const scope = bucket.scope("_default");
+  return scope.collection("Mario");
 };
 
 /**
@@ -38,7 +39,7 @@ app.get("/api/players/all", async (req, res) => {
     const cluster = await connectCouchbase();
     const bucket = cluster.bucket(process.env.COUCHBASE_BUCKET);
     const scope = bucket.scope("_default");
-    const query = `SELECT META().id AS id, * FROM \`${process.env.COUCHBASE_BUCKET}\``;
+    const query = `SELECT META().id AS id, * FROM \`${process.env.COUCHBASE_BUCKET}\`._default.Mario`;
 
     const result = await cluster.query(query);
 
@@ -202,7 +203,7 @@ app.delete("/api/players/delete", async (req, res) => {
     const collection = await getCollection();
 
     // Query to fetch all player IDs
-    const query = `SELECT META().id AS id FROM \`${process.env.COUCHBASE_BUCKET}\``;
+    const query = `SELECT META().id AS id FROM \`${process.env.COUCHBASE_BUCKET}\`._default.Mario`;
     const result = await cluster.query(query);
 
     // Delete each player document
