@@ -38,7 +38,7 @@ app.get("/api/players/all", async (req, res) => {
     const cluster = await connectCouchbase();
     const bucket = cluster.bucket(process.env.COUCHBASE_BUCKET);
     const scope = bucket.scope("_default");
-    const query = `SELECT META().id AS id, * FROM \`${process.env.COUCHBASE_BUCKET}\`._default.Mario`;
+    const query = `SELECT META().id AS id, * FROM \`${process.env.COUCHBASE_BUCKET}\``;
 
     const result = await cluster.query(query);
 
@@ -97,12 +97,10 @@ app.post("/api/players", async (req, res) => {
     // Upsert (Insert or Update) player record
     await collection.upsert(playerId, playerDocument);
 
-    res
-      .status(200)
-      .json({
-        message: "Player record created/updated successfully",
-        playerId,
-      });
+    res.status(200).json({
+      message: "Player record created/updated successfully",
+      playerId,
+    });
   } catch (error) {
     console.error("Error creating/updating player record:", error);
     res.status(500).json({ error: "Failed to create/update player record" });
@@ -204,7 +202,7 @@ app.delete("/api/players/delete", async (req, res) => {
     const collection = await getCollection();
 
     // Query to fetch all player IDs
-    const query = `SELECT META().id AS id FROM \`${process.env.COUCHBASE_BUCKET}\`._default.Mario`;
+    const query = `SELECT META().id AS id FROM \`${process.env.COUCHBASE_BUCKET}\``;
     const result = await cluster.query(query);
 
     // Delete each player document
