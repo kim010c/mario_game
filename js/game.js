@@ -1,9 +1,9 @@
-BACKEND_URL = "https://mario-p44r.onrender.com";
+BACKEND_URL = "https://mario-game-3u4q.onrender.com";
 //BACKEND_URL = "http://localhost:3000";
 
 // Create and initialize the inspector panel
 function createInspector() {
-  const inspectorStyles = document.createElement('style');
+  const inspectorStyles = document.createElement("style");
   inspectorStyles.textContent = `
   body {
     margin: 0;
@@ -94,19 +94,19 @@ function createInspector() {
   document.head.appendChild(inspectorStyles);
 
   // Create a container for the game canvas
-  const gameContainer = document.createElement('div');
-  gameContainer.id = 'game-container';
+  const gameContainer = document.createElement("div");
+  gameContainer.id = "game-container";
 
   // Move the existing canvas (created in createCanvas()) into the container
-  const existingCanvas = document.querySelector('canvas');
+  const existingCanvas = document.querySelector("canvas");
   if (existingCanvas) {
     existingCanvas.remove();
     gameContainer.appendChild(existingCanvas);
   }
 
   // Create the inspector panel element
-  const inspector = document.createElement('div');
-  inspector.id = 'inspector';
+  const inspector = document.createElement("div");
+  inspector.id = "inspector";
   inspector.innerHTML = `
     <div class="inspector-header">
       <div class="inspector-tab active">Console</div>
@@ -154,18 +154,20 @@ function createInspector() {
       fireballsShot: player.fireballsShot || 0,
       enemiesDefeated: player.enemiesDefeated || 0,
       reachedFlag: player.reachedFlag || false,
-      flagPoleHeight: player.flagPoleHeight || 0
+      flagPoleHeight: player.flagPoleHeight || 0,
     };
 
     // Loop through each property row and update its value if it exists in the stats.
-    const rows = inspector.querySelectorAll('.property-row');
-    rows.forEach(row => {
-      const nameEl = row.querySelector('.property-name');
-      const valueEl = row.querySelector('.property-value');
+    const rows = inspector.querySelectorAll(".property-row");
+    rows.forEach((row) => {
+      const nameEl = row.querySelector(".property-name");
+      const valueEl = row.querySelector(".property-value");
       const key = nameEl.textContent.trim();
       if (stats.hasOwnProperty(key)) {
         const value = stats[key];
-        valueEl.textContent = Array.isArray(value) ? `[${value.join(', ')}]` : value;
+        valueEl.textContent = Array.isArray(value)
+          ? `[${value.join(", ")}]`
+          : value;
       }
     });
   };
@@ -229,14 +231,14 @@ function initializeGame() {
   player = new Mario.Player([0, 0]);
 
   // Initialize player stats
-  player.coins = 0;  // Regular coin counter
-  player.coinsCollected = 0;  // Tracking counter
+  player.coins = 0; // Regular coin counter
+  player.coinsCollected = 0; // Tracking counter
   player.fireballsShot = 0;
   player.enemiesDefeated = 0;
   player.reachedFlag = false;
   player.flagPoleHeight = 0;
 
-  if (!document.getElementById('inspector')) {
+  if (!document.getElementById("inspector")) {
     createInspector();
   }
 
@@ -269,58 +271,58 @@ function initializeGame() {
 
 function showWaitingRoom() {
   // Create a container for the waiting room
-  const waitingDiv = document.createElement('div');
-  waitingDiv.id = 'waiting-room';
-  waitingDiv.style.maxWidth = '500px';
-  waitingDiv.style.margin = '20px auto';
-  waitingDiv.style.padding = '20px';
-  waitingDiv.style.backgroundColor = '#5C94FC'; // Mario sky blue
-  waitingDiv.style.border = '4px solid #000';
-  waitingDiv.style.borderRadius = '10px';
-  waitingDiv.style.boxShadow = '0 0 0 4px #FFF, 0 0 0 8px #000';
-  waitingDiv.style.textAlign = 'center';
+  const waitingDiv = document.createElement("div");
+  waitingDiv.id = "waiting-room";
+  waitingDiv.style.maxWidth = "500px";
+  waitingDiv.style.margin = "20px auto";
+  waitingDiv.style.padding = "20px";
+  waitingDiv.style.backgroundColor = "#5C94FC"; // Mario sky blue
+  waitingDiv.style.border = "4px solid #000";
+  waitingDiv.style.borderRadius = "10px";
+  waitingDiv.style.boxShadow = "0 0 0 4px #FFF, 0 0 0 8px #000";
+  waitingDiv.style.textAlign = "center";
   waitingDiv.style.fontFamily = '"Courier New", monospace'; // Pixel-like font
 
-  const heading = document.createElement('h2');
+  const heading = document.createElement("h2");
   heading.textContent = "SELECT YOUR PLAYER";
-  heading.style.color = '#FFF';
-  heading.style.textShadow = '2px 2px 0 #000';
-  heading.style.fontSize = '24px';
-  heading.style.marginBottom = '20px';
-  heading.style.textTransform = 'uppercase';
+  heading.style.color = "#FFF";
+  heading.style.textShadow = "2px 2px 0 #000";
+  heading.style.fontSize = "24px";
+  heading.style.marginBottom = "20px";
+  heading.style.textTransform = "uppercase";
   waitingDiv.appendChild(heading);
 
   // Container for the player list (now a dropdown)
-  const listContainer = document.createElement('div');
-  listContainer.id = 'player-list';
-  listContainer.style.marginBottom = '20px';
+  const listContainer = document.createElement("div");
+  listContainer.id = "player-list";
+  listContainer.style.marginBottom = "20px";
   waitingDiv.appendChild(listContainer);
 
   // Refresh button to update the list manually
-  const refreshButton = document.createElement('button');
+  const refreshButton = document.createElement("button");
   refreshButton.textContent = "REFRESH LIST";
-  refreshButton.style.backgroundColor = '#E52521'; // Mario red
-  refreshButton.style.color = 'white';
-  refreshButton.style.border = '4px solid #000';
-  refreshButton.style.borderRadius = '5px';
-  refreshButton.style.padding = '10px 20px';
-  refreshButton.style.fontSize = '16px';
-  refreshButton.style.fontWeight = 'bold';
-  refreshButton.style.cursor = 'pointer';
+  refreshButton.style.backgroundColor = "#E52521"; // Mario red
+  refreshButton.style.color = "white";
+  refreshButton.style.border = "4px solid #000";
+  refreshButton.style.borderRadius = "5px";
+  refreshButton.style.padding = "10px 20px";
+  refreshButton.style.fontSize = "16px";
+  refreshButton.style.fontWeight = "bold";
+  refreshButton.style.cursor = "pointer";
   refreshButton.style.fontFamily = '"Courier New", monospace';
-  refreshButton.style.boxShadow = '2px 2px 0 #000';
-  refreshButton.addEventListener('click', () => {
+  refreshButton.style.boxShadow = "2px 2px 0 #000";
+  refreshButton.addEventListener("click", () => {
     fetchPlayerList();
   });
-  
+
   // Add hover effect
-  refreshButton.onmouseover = function() {
-    this.style.backgroundColor = '#FF4D4D';
+  refreshButton.onmouseover = function () {
+    this.style.backgroundColor = "#FF4D4D";
   };
-  refreshButton.onmouseout = function() {
-    this.style.backgroundColor = '#E52521';
+  refreshButton.onmouseout = function () {
+    this.style.backgroundColor = "#E52521";
   };
-  
+
   waitingDiv.appendChild(refreshButton);
 
   document.body.appendChild(waitingDiv);
@@ -328,92 +330,96 @@ function showWaitingRoom() {
 }
 
 async function fetchPlayerList() {
-  const listContainer = document.getElementById('player-list');
-  listContainer.innerHTML = "<div style='color: white; font-weight: bold;'>LOADING...</div>";
-  
+  const listContainer = document.getElementById("player-list");
+  listContainer.innerHTML =
+    "<div style='color: white; font-weight: bold;'>LOADING...</div>";
+
   try {
     const response = await fetch(`${BACKEND_URL}/api/players/all`);
     if (!response.ok) throw new Error("Failed to fetch players");
     const players = await response.json();
 
     // Filter for waiting players
-    const waitingPlayers = players.filter(p => p.gameplay && p.gameplay.score === 0);
+    const waitingPlayers = players.filter(
+      (p) => p.gameplay && p.gameplay.score === 0
+    );
     listContainer.innerHTML = "";
-    
+
     if (waitingPlayers.length === 0) {
-      const message = document.createElement('div');
-      message.textContent = "NO PLAYERS WAITING. PLEASE REGISTER FIRST ON YOUR PHONE.";
-      message.style.color = 'white';
-      message.style.fontWeight = 'bold';
-      message.style.padding = '10px';
-      message.style.backgroundColor = 'rgba(0,0,0,0.5)';
-      message.style.borderRadius = '5px';
+      const message = document.createElement("div");
+      message.textContent =
+        "NO PLAYERS WAITING. PLEASE REGISTER FIRST ON YOUR PHONE.";
+      message.style.color = "white";
+      message.style.fontWeight = "bold";
+      message.style.padding = "10px";
+      message.style.backgroundColor = "rgba(0,0,0,0.5)";
+      message.style.borderRadius = "5px";
       listContainer.appendChild(message);
       return;
     }
 
     // Create select dropdown
-    const selectBox = document.createElement('select');
-    selectBox.style.width = '80%';
-    selectBox.style.padding = '10px';
-    selectBox.style.fontSize = '16px';
-    selectBox.style.backgroundColor = '#FBD000'; // Mario yellow
-    selectBox.style.color = '#000';
-    selectBox.style.border = '4px solid #000';
-    selectBox.style.borderRadius = '5px';
-    selectBox.style.marginBottom = '20px';
+    const selectBox = document.createElement("select");
+    selectBox.style.width = "80%";
+    selectBox.style.padding = "10px";
+    selectBox.style.fontSize = "16px";
+    selectBox.style.backgroundColor = "#FBD000"; // Mario yellow
+    selectBox.style.color = "#000";
+    selectBox.style.border = "4px solid #000";
+    selectBox.style.borderRadius = "5px";
+    selectBox.style.marginBottom = "20px";
     selectBox.style.fontFamily = '"Courier New", monospace';
-    selectBox.style.cursor = 'pointer';
-    
+    selectBox.style.cursor = "pointer";
+
     // Add default option
-    const defaultOption = document.createElement('option');
+    const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "-- SELECT PLAYER --";
     defaultOption.disabled = true;
     defaultOption.selected = true;
     selectBox.appendChild(defaultOption);
-    
+
     // Add player options
-    waitingPlayers.forEach(player => {
+    waitingPlayers.forEach((player) => {
       const nameParts = player.name.split(" ");
       let displayName = nameParts[0];
       if (nameParts.length > 1) {
         displayName += " " + nameParts[1][0] + ".";
       }
-      
-      const option = document.createElement('option');
+
+      const option = document.createElement("option");
       option.value = player.id;
       option.textContent = displayName;
       selectBox.appendChild(option);
     });
-    
+
     listContainer.appendChild(selectBox);
-    
+
     // Add play button
-    const playButton = document.createElement('button');
+    const playButton = document.createElement("button");
     playButton.textContent = "PLAY!";
-    playButton.style.backgroundColor = '#1EB53A'; // Mario green
-    playButton.style.color = 'white';
-    playButton.style.border = '4px solid #000';
-    playButton.style.borderRadius = '5px';
-    playButton.style.padding = '10px 30px';
-    playButton.style.fontSize = '18px';
-    playButton.style.fontWeight = 'bold';
-    playButton.style.cursor = 'pointer';
+    playButton.style.backgroundColor = "#1EB53A"; // Mario green
+    playButton.style.color = "white";
+    playButton.style.border = "4px solid #000";
+    playButton.style.borderRadius = "5px";
+    playButton.style.padding = "10px 30px";
+    playButton.style.fontSize = "18px";
+    playButton.style.fontWeight = "bold";
+    playButton.style.cursor = "pointer";
     playButton.style.fontFamily = '"Courier New", monospace';
-    playButton.style.display = 'block';
-    playButton.style.margin = '0 auto';
-    playButton.style.boxShadow = '2px 2px 0 #000';
-    
+    playButton.style.display = "block";
+    playButton.style.margin = "0 auto";
+    playButton.style.boxShadow = "2px 2px 0 #000";
+
     // Add hover effect
-    playButton.onmouseover = function() {
-      this.style.backgroundColor = '#2FD54A';
+    playButton.onmouseover = function () {
+      this.style.backgroundColor = "#2FD54A";
     };
-    playButton.onmouseout = function() {
-      this.style.backgroundColor = '#1EB53A';
+    playButton.onmouseout = function () {
+      this.style.backgroundColor = "#1EB53A";
     };
-    
-    playButton.addEventListener('click', () => {
+
+    playButton.addEventListener("click", () => {
       if (selectBox.value) {
         // Set the global playerId so that the game updates this player record
         playerId = selectBox.value;
@@ -422,18 +428,18 @@ async function fetchPlayerList() {
         alert("Please select a player first!");
       }
     });
-    
+
     listContainer.appendChild(playButton);
-    
   } catch (error) {
-    listContainer.innerHTML = "<div style='color: white; font-weight: bold; background-color: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px;'>ERROR LOADING PLAYER LIST!</div>";
+    listContainer.innerHTML =
+      "<div style='color: white; font-weight: bold; background-color: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px;'>ERROR LOADING PLAYER LIST!</div>";
     console.error(error);
   }
 }
 
 function startGame() {
   // Clear the waiting room UI
-  const waitingRoom = document.getElementById('waiting-room');
+  const waitingRoom = document.getElementById("waiting-room");
   if (waitingRoom) {
     waitingRoom.remove();
   }
@@ -464,9 +470,9 @@ async function sendGameplayUpdate(state) {
           fireballsShot: player.fireballsShot || 0,
           enemiesDefeated: player.enemiesDefeated || 0,
           reachedFlag: player.reachedFlag || false,
-          flagPoleHeight: player.flagPoleHeight || 0
-        }
-      }
+          flagPoleHeight: player.flagPoleHeight || 0,
+        },
+      },
     };
 
     // Use non-blocking fetch
@@ -474,8 +480,7 @@ async function sendGameplayUpdate(state) {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ gameplayState: gameState }),
-    }).catch(error => console.error("🪙 NETWORK ERROR:", error));
-
+    }).catch((error) => console.error("🪙 NETWORK ERROR:", error));
   } catch (error) {
     console.error("🪙 Update Error:", error);
   }
@@ -497,17 +502,17 @@ async function sendImmediateGameplayUpdate(state) {
           fireballsShot: player.fireballsShot || 0,
           enemiesDefeated: player.enemiesDefeated || 0,
           reachedFlag: player.reachedFlag || false,
-          flagPoleHeight: player.flagPoleHeight || 0
-        }
-      }
+          flagPoleHeight: player.flagPoleHeight || 0,
+        },
+      },
     };
 
-    console.log('🪙 IMMEDIATE UPDATE:', {
+    console.log("🪙 IMMEDIATE UPDATE:", {
       playerStats: gameState.state.playerStats,
       rawValues: {
         coins: player.coins,
-        coinsCollected: player.coinsCollected
-      }
+        coinsCollected: player.coinsCollected,
+      },
     });
 
     const response = await fetch(`${BACKEND_URL}/api/players/${playerId}`, {
@@ -521,7 +526,7 @@ async function sendImmediateGameplayUpdate(state) {
     }
 
     const responseData = await response.json();
-    console.log('🪙 Server Response:', responseData);
+    console.log("🪙 Server Response:", responseData);
   } catch (error) {
     console.error("🪙 Update Error:", error);
   }
@@ -683,7 +688,7 @@ function updateEntities(dt, gameTime) {
     position: player.pos,
     velocity: player.vel,
     lives: player.lives,
-    score: player.score
+    score: player.score,
   });
 }
 
@@ -755,7 +760,7 @@ function update(dt) {
   updateEntities(dt, gameTime);
   checkCollisions();
 
-  if (typeof window.updateInspector === 'function') {
+  if (typeof window.updateInspector === "function") {
     window.updateInspector();
   }
 }
@@ -788,9 +793,9 @@ function onGameEnd() {
 }
 
 function createTimer() {
-  timerDisplay = document.createElement('div');
-  timerDisplay.className = 'timer';
-  timerDisplay.textContent = gameTimer + 's';
+  timerDisplay = document.createElement("div");
+  timerDisplay.className = "timer";
+  timerDisplay.textContent = gameTimer + "s";
   document.body.appendChild(timerDisplay);
 }
 
@@ -798,7 +803,7 @@ function startGameTimer() {
   createTimer();
   timerInterval = setInterval(() => {
     gameTimer--;
-    timerDisplay.textContent = gameTimer + 's';
+    timerDisplay.textContent = gameTimer + "s";
 
     if (gameTimer <= 0) {
       clearInterval(timerInterval);
@@ -814,7 +819,7 @@ function endGame() {
 
   // Show game over popup
   setTimeout(() => {
-    alert('Time\'s up! Game Over!');
+    alert("Time's up! Game Over!");
     window.location.reload();
   }, 100);
 }
