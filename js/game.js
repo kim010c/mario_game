@@ -601,12 +601,12 @@ function handleGamepadInput(dt) {
     movingRight: false,
   };
 
-  if (gp.buttons[1].pressed || gp.buttons[2].pressed) {
+  if (gp.buttons[0].pressed) {
     player.run();
     actionState.running = true;
   } else player.noRun();
 
-  if (gp.buttons[0].pressed) {
+  if (gp.buttons[1].pressed || gp.buttons[2].pressed) {
     player.jump();
     actionState.jumping = true;
   } else player.noJump();
